@@ -2010,11 +2010,10 @@ class _SubqueryLoader(_PostLoader):
             and context.compile_state.statement is not None
             and context.compile_state.statement.is_dml
         ):
-            util.warn_deprecated(
+            raise sa_exc.InvalidRequestError(
                 "The subqueryload loader option is not compatible with DML "
-                "statements such as INSERT, UPDATE.  Only SELECT may be used."
-                "This warning will become an exception in a future release.",
-                "2.0",
+                "statements such as INSERT, UPDATE.  Only SELECT may be "
+                "used."
             )
 
         if context.refresh_state:
@@ -2192,11 +2191,10 @@ class _JoinedLoader(_AbstractRelationshipLoader):
             and compile_state.statement is not None
             and compile_state.statement.is_dml
         ):
-            util.warn_deprecated(
+            raise sa_exc.InvalidRequestError(
                 "The joinedload loader option is not compatible with DML "
-                "statements such as INSERT, UPDATE.  Only SELECT may be used."
-                "This warning will become an exception in a future release.",
-                "2.0",
+                "statements such as INSERT, UPDATE.  Only SELECT may be "
+                "used."
             )
         elif self.uselist:
             compile_state.multi_row_eager_loaders = True

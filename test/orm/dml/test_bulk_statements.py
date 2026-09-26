@@ -45,7 +45,6 @@ from sqlalchemy.sql import coercions
 from sqlalchemy.sql import roles
 from sqlalchemy.testing import config
 from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_deprecated
 from sqlalchemy.testing import expect_raises_message
 from sqlalchemy.testing import expect_warnings
 from sqlalchemy.testing import fixtures
@@ -2640,7 +2639,8 @@ class EagerLoadTest(
 
         stmt = insert(B).returning(B).options(loader(B.a))
 
-        with expect_deprecated(
+        with expect_raises_message(
+            exc.InvalidRequestError,
             f"The {loader.__name__} loader option is not compatible "
             "with DML statements",
         ):
